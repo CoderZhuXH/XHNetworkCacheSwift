@@ -47,7 +47,7 @@ if let json = XHNetworkCache.cacheJsonWithURL(URLString)
 let path = XHNetworkCache.cachePath()
 
 ```
-### 4.清除缓存
+### 5.清除缓存
 ```objc
 //清除缓存
 if XHNetworkCache.clearCache()
@@ -60,7 +60,7 @@ else
 }
 ```
 
-### 5.获取缓存总大小(M)
+### 6.获取缓存总大小(M)
 ```objc
 //获取缓存总大小(M)
 let size = XHNetworkCache.cacheSize()
