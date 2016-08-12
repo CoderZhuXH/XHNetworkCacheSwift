@@ -67,8 +67,8 @@ let size = XHNetworkCache.cacheSize()
 ```
 ##  安装
 ### 手动添加:<br>
-*   1.将 XHNetworkCache-Swift 文件夹添加到工程目录中即可<br>
-*   2.安装后,请在项目`Bridging-Header.h` 桥接文件中 `#import<CommonCrypto/CommonCrypto.h>`
+*   1.将 XHNetworkCache-Swift 文件夹添加到工程目录中<br>
+*   2.在项目`Bridging-Header.h` 桥接文件中 `#import<CommonCrypto/CommonCrypto.h>`
 *   3.`Bridging-Header.h`桥接文件怎么创建??? 请自行Google或百度
 
 ##  系统要求
