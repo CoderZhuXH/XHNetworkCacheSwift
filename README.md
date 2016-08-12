@@ -1,5 +1,5 @@
 # XHNetworkCache-Swift
-#### 一行代码将请求数据写入磁盘缓存-支持CocoaPods<br>
+#### 一行代码将请求数据写入磁盘缓存
 ####[OC版本请戳这里>>>](https://github.com/CoderZhuXH/XHNetworkCache)
 ###技术交流群(群号:537476189)
 ## 使用方法:
@@ -66,19 +66,10 @@ else
 let size = XHNetworkCache.cacheSize()
 ```
 ##  安装
-### 1.手动添加:<br>
+### 手动添加:<br>
 *   1.将 XHNetworkCache-Swift 文件夹添加到工程目录中即可<br>
-
-### 2.CocoaPods:<br>
-*   1.在 Podfile 中添加 pod 'XHNetworkCache-Swift'<br>
-*   2.执行 pod install 或 pod update<br>
-
-### 3.注意事项:
-*    安装后,请在项目`Bridging-Header.h` 桥接文件中 `#import<CommonCrypto/CommonCrypto.h>`
-*    `Bridging-Header.h`桥接文件怎么创建??? 请自行Google或百度
-
-### 4.Tips
-*	如果你发现你执行pod install后,导入的不是最新的,请删除Podfile.lock文件,在执行一次 pod install
+*   2.安装后,请在项目`Bridging-Header.h` 桥接文件中 `#import<CommonCrypto/CommonCrypto.h>`
+*   3.`Bridging-Header.h`桥接文件怎么创建??? 请自行Google或百度
 
 ##  系统要求
 *   该项目最低支持 iOS 8.0 和 Xcode 7.3
