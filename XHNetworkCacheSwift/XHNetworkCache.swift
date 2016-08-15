@@ -4,7 +4,7 @@
 //
 //  Created by xiaohui on 16/8/12.
 //  Copyright © 2016年 qiantou. All rights reserved.
-//  代码地址:https://github.com/CoderZhuXH/XHNetworkCache-Swift
+//  代码地址:https://github.com/CoderZhuXH/XHNetworkCacheSwift
 
 /**
  *  注意: 使用前请在'-Bridging-Header.h' 桥接文件中导入 #import<CommonCrypto/CommonCrypto.h>
@@ -12,8 +12,8 @@
 
 import UIKit
 
-class XHNetworkCache {
-    
+extension XHNetworkCache
+{
     /**
      写入/更新缓存(同步) [按APP版本号缓存,不同版本APP,同一接口缓存数据互不干扰]
      
@@ -22,7 +22,7 @@ class XHNetworkCache {
      
      - returns: 是否写入成功
      */
-    class func saveJsonResponseToCacheFile(jsonResponse: AnyObject,URL: String) -> Bool {
+    public class func saveJsonResponseToCacheFile(jsonResponse: AnyObject,URL: String) -> Bool {
         
         let data = jsonToData(jsonResponse)
         return NSFileManager.defaultManager().createFileAtPath(cacheFilePathWithURL(URL), contents: data, attributes: nil)
@@ -36,7 +36,7 @@ class XHNetworkCache {
      - parameter URL:          数据请求URL
      - parameter completed:    异步完成回调(主线程回调)
      */
-    class func save_asyncJsonResponseToCacheFile(jsonResponse: AnyObject,URL: String, completed:(Bool) -> ()) {
+    public class func save_asyncJsonResponseToCacheFile(jsonResponse: AnyObject,URL: String, completed:(Bool) -> ()) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             
@@ -56,7 +56,7 @@ class XHNetworkCache {
      
      - returns: 缓存对象
      */
-    class func cacheJsonWithURL(URL: String) -> AnyObject? {
+    public class func cacheJsonWithURL(URL: String) -> AnyObject? {
         let path: String = self.cacheFilePathWithURL(URL)
         let fileManager: NSFileManager = NSFileManager.defaultManager()
         if fileManager.fileExistsAtPath(path, isDirectory: nil) == true {
@@ -72,7 +72,7 @@ class XHNetworkCache {
      
      - returns: 缓存路径
      */
-    class func cachePath() -> String {
+    public class func cachePath() -> String {
         
         let pathOfLibrary = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0] as NSString
         let path = pathOfLibrary.stringByAppendingPathComponent("XHNetworkCache")
@@ -82,7 +82,7 @@ class XHNetworkCache {
     /**
      清除缓存
      */
-    class func clearCache() -> Bool{
+    public class func clearCache() -> Bool{
         let fileManager: NSFileManager = NSFileManager.defaultManager()
         let path: String = self.cachePath()
         do
@@ -103,7 +103,7 @@ class XHNetworkCache {
      
      - returns: 缓存大小(单位:M)
      */
-    class func cacheSize()-> Float {
+    public class func cacheSize()-> Float {
         
         let cachePath = self.cachePath()
         do
@@ -127,6 +127,10 @@ class XHNetworkCache {
             return 0;
         }
     }
+
+}
+
+public class XHNetworkCache {
     
     //MARK: - private
     private class func jsonToData(jsonResponse: AnyObject) -> NSData? {

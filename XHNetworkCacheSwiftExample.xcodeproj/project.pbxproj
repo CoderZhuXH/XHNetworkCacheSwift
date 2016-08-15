@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B5E92131D61D9F90047BBB5 /* XHNetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5E92121D61D9F90047BBB5 /* XHNetworkCache.swift */; };
 		4B75431B1D5DB8A4007D3C7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75431A1D5DB8A4007D3C7E /* AppDelegate.swift */; };
 		4B7543221D5DB8A4007D3C7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B7543211D5DB8A4007D3C7E /* Assets.xcassets */; };
 		4B7543251D5DB8A4007D3C7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7543231D5DB8A4007D3C7E /* LaunchScreen.storyboard */; };
 		4B75432E1D5DB942007D3C7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75432C1D5DB942007D3C7E /* ViewController.swift */; };
 		4B75432F1D5DB942007D3C7E /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B75432D1D5DB942007D3C7E /* ViewController.xib */; };
-		4B7543321D5DB9B8007D3C7E /* XHNetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7543311D5DB9B8007D3C7E /* XHNetworkCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B5E92121D61D9F90047BBB5 /* XHNetworkCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XHNetworkCache.swift; sourceTree = "<group>"; };
 		4B7543171D5DB8A4007D3C7E /* XHNetworkCacheSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XHNetworkCacheSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B75431A1D5DB8A4007D3C7E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B7543211D5DB8A4007D3C7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -23,7 +24,6 @@
 		4B7543261D5DB8A4007D3C7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B75432C1D5DB942007D3C7E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4B75432D1D5DB942007D3C7E /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
-		4B7543311D5DB9B8007D3C7E /* XHNetworkCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XHNetworkCache.swift; sourceTree = "<group>"; };
 		4B7543331D5DB9FC007D3C7E /* XHNetworkCacheSwiftExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XHNetworkCacheSwiftExample-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -38,11 +38,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B5E92111D61D9F90047BBB5 /* XHNetworkCacheSwift */ = {
+			isa = PBXGroup;
+			children = (
+				4B5E92121D61D9F90047BBB5 /* XHNetworkCache.swift */,
+			);
+			path = XHNetworkCacheSwift;
+			sourceTree = "<group>";
+		};
 		4B75430E1D5DB8A4007D3C7E = {
 			isa = PBXGroup;
 			children = (
 				4B7543191D5DB8A4007D3C7E /* XHNetworkCacheSwiftExample */,
-				4B7543301D5DB997007D3C7E /* XHNetworkCache-Swift */,
+				4B5E92111D61D9F90047BBB5 /* XHNetworkCacheSwift */,
 				4B7543181D5DB8A4007D3C7E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,14 +75,6 @@
 				4B7543331D5DB9FC007D3C7E /* XHNetworkCacheSwiftExample-Bridging-Header.h */,
 			);
 			path = XHNetworkCacheSwiftExample;
-			sourceTree = "<group>";
-		};
-		4B7543301D5DB997007D3C7E /* XHNetworkCache-Swift */ = {
-			isa = PBXGroup;
-			children = (
-				4B7543311D5DB9B8007D3C7E /* XHNetworkCache.swift */,
-			);
-			path = "XHNetworkCache-Swift";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,7 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B75432E1D5DB942007D3C7E /* ViewController.swift in Sources */,
-				4B7543321D5DB9B8007D3C7E /* XHNetworkCache.swift in Sources */,
+				4B5E92131D61D9F90047BBB5 /* XHNetworkCache.swift in Sources */,
 				4B75431B1D5DB8A4007D3C7E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +299,7 @@
 				4B75432B1D5DB8A4007D3C7E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
