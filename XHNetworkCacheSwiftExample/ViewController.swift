@@ -3,7 +3,7 @@
 //  XHNetworkCacheSwiftExample
 //
 //  Created by xiaohui on 16/8/12.
-//  Copyright © 2016年 qiantou. All rights reserved.
+//  Copyright © 2016年 CoderZhuXH. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHNetworkCacheSwift
 
 import UIKit
@@ -54,9 +54,9 @@ class ViewController: UIViewController {
     /**
      *  (同步)写入/更新缓存
      */
-    @IBAction func save(sender: UIButton) {
+    @IBAction func save(_ sender: UIButton) {
         
-      if XHNetworkCache.saveJsonResponseToCacheFile(responseObject, URL: URLString)
+      if XHNetworkCache.saveJsonResponseToCacheFile(responseObject as AnyObject, URL: URLString)
       {
          print("(同步)保存/更新成功")
       }
@@ -71,9 +71,9 @@ class ViewController: UIViewController {
     /**
      *  (异步)写入/更新缓存
      */
-    @IBAction func save_async(sender: UIButton) {
+    @IBAction func save_async(_ sender: UIButton) {
         
-        XHNetworkCache.save_asyncJsonResponseToCacheFile(responseObject, URL: URLString) { (result) in
+        XHNetworkCache.save_asyncJsonResponseToCacheFile(responseObject as AnyObject, URL: URLString) { (result) in
             
             if(result)
             {
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
     /**
      *  获取缓存数据
      */
-    @IBAction func getCache(sender: UIButton) {
+    @IBAction func getCache(_ sender: UIButton) {
    
         if let json = XHNetworkCache.cacheJsonWithURL(URLString)
         {
@@ -101,7 +101,7 @@ class ViewController: UIViewController {
     /**
      *  缓存数据大小(M)
      */
-    @IBAction func cacheSize(sender: UIButton) {
+    @IBAction func cacheSize(_ sender: UIButton) {
    
     
         let size = XHNetworkCache.cacheSize()
@@ -113,7 +113,7 @@ class ViewController: UIViewController {
     /**
      *  缓存路径
      */
-    @IBAction func cachePath(sender: UIButton) {
+    @IBAction func cachePath(_ sender: UIButton) {
     
         let path = XHNetworkCache.cachePath()
          print("缓存路径=" + path)
@@ -123,7 +123,7 @@ class ViewController: UIViewController {
     /**
      *  清除缓存
      */
-    @IBAction func clearCache(sender: UIButton) {
+    @IBAction func clearCache(_ sender: UIButton) {
     
         if XHNetworkCache.clearCache()
         {

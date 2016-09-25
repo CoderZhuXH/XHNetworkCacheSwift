@@ -3,7 +3,7 @@
 //  XHNetworkCacheSwiftExample
 //
 //  Created by xiaohui on 16/8/12.
-//  Copyright © 2016年 qiantou. All rights reserved.
+//  Copyright © 2016年 CoderZhuXH. All rights reserved.
 //  代码地址:https://github.com/CoderZhuXH/XHNetworkCacheSwift
 
 /**
@@ -22,10 +22,10 @@ extension XHNetworkCache
      
      - returns: 是否写入成功
      */
-    public class func saveJsonResponseToCacheFile(jsonResponse: AnyObject,URL: String) -> Bool {
+    public class func saveJsonResponseToCacheFile(_ jsonResponse: AnyObject,URL: String) -> Bool {
         
         let data = jsonToData(jsonResponse)
-        return NSFileManager.defaultManager().createFileAtPath(cacheFilePathWithURL(URL), contents: data, attributes: nil)
+        return FileManager.default.createFile(atPath: cacheFilePathWithURL(URL), contents: data, attributes: nil)
         
     }
     
@@ -36,13 +36,13 @@ extension XHNetworkCache
      - parameter URL:          数据请求URL
      - parameter completed:    异步完成回调(主线程回调)
      */
-    public class func save_asyncJsonResponseToCacheFile(jsonResponse: AnyObject,URL: String, completed:(Bool) -> ()) {
+    public class func save_asyncJsonResponseToCacheFile(_ jsonResponse: AnyObject,URL: String, completed:@escaping (Bool) -> ()) {
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+        DispatchQueue.global().async{
             
             let result = saveJsonResponseToCacheFile(jsonResponse, URL: URL)
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 
                 completed(result)
             })
@@ -56,11 +56,11 @@ extension XHNetworkCache
      
      - returns: 缓存对象
      */
-    public class func cacheJsonWithURL(URL: String) -> AnyObject? {
+    public class func cacheJsonWithURL(_ URL: String) -> AnyObject? {
         let path: String = self.cacheFilePathWithURL(URL)
-        let fileManager: NSFileManager = NSFileManager.defaultManager()
-        if fileManager.fileExistsAtPath(path, isDirectory: nil) == true {
-            let data: NSData = fileManager.contentsAtPath(path)!
+        let fileManager: FileManager = FileManager.default
+        if fileManager.fileExists(atPath: path, isDirectory: nil) == true {
+            let data: Data = fileManager.contents(atPath: path)!
             return self.dataToJson(data)
         }
         
@@ -74,8 +74,8 @@ extension XHNetworkCache
      */
     public class func cachePath() -> String {
         
-        let pathOfLibrary = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.LibraryDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0] as NSString
-        let path = pathOfLibrary.stringByAppendingPathComponent("XHNetworkCache")
+        let pathOfLibrary = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0] as NSString
+        let path = pathOfLibrary.appendingPathComponent("XHNetworkCache")
         return path
     }
     
@@ -83,11 +83,11 @@ extension XHNetworkCache
      清除缓存
      */
     public class func clearCache() -> Bool{
-        let fileManager: NSFileManager = NSFileManager.defaultManager()
+        let fileManager: FileManager = FileManager.default
         let path: String = self.cachePath()
         do
         {
-            try fileManager.removeItemAtPath(path)
+            try fileManager.removeItem(atPath: path)
             self.checkDirectory(self.cachePath())
             return true
         }
@@ -108,14 +108,14 @@ extension XHNetworkCache
         let cachePath = self.cachePath()
         do
         {
-            let fileArr = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(cachePath)
+            let fileArr = try FileManager.default.contentsOfDirectory(atPath: cachePath)
             var size:Float = 0
             for file in fileArr{
-                let path = cachePath.stringByAppendingString("/\(file)")
-                let floder = try! NSFileManager.defaultManager().attributesOfItemAtPath(path)
+                let path = cachePath + "/\(file)"
+                let floder = try! FileManager.default.attributesOfItem(atPath: path)
                 for (abc, bcd) in floder {
-                    if abc == NSFileSize {
-                        size += bcd.floatValue
+                    if abc == FileAttributeKey.size {
+                        size += (bcd as AnyObject).floatValue
                     }
                 }
             }
@@ -130,14 +130,14 @@ extension XHNetworkCache
 
 }
 
-public class XHNetworkCache {
+open class XHNetworkCache {
     
     //MARK: - private
-    private class func jsonToData(jsonResponse: AnyObject) -> NSData? {
+    fileprivate class func jsonToData(_ jsonResponse: AnyObject) -> Data? {
         
         do{
             
-            let data = try NSJSONSerialization.dataWithJSONObject(jsonResponse, options: NSJSONWritingOptions.PrettyPrinted)
+            let data = try JSONSerialization.data(withJSONObject: jsonResponse, options: JSONSerialization.WritingOptions.prettyPrinted)
             return data;
             
         }catch
@@ -146,12 +146,12 @@ public class XHNetworkCache {
         }
     }
     
-    private class func dataToJson(data: NSData) -> AnyObject? {
+    fileprivate class func dataToJson(_ data: Data) -> AnyObject? {
         
         do{
             
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
-            return json
+            let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+            return json as AnyObject?
             
         }
         catch
@@ -160,7 +160,7 @@ public class XHNetworkCache {
         }
     }
     
-    private class func cacheFilePathWithURL(URL: String) -> String {
+    fileprivate class func cacheFilePathWithURL(_ URL: String) -> String {
         var path: String = self.cachePath()
         self.checkDirectory(path)
         //check路径
@@ -170,24 +170,24 @@ public class XHNetworkCache {
         return path
     }
     
-    private class func checkDirectory(path: String) {
-        let fileManager: NSFileManager = NSFileManager.defaultManager()
+    fileprivate class func checkDirectory(_ path: String) {
+        let fileManager: FileManager = FileManager.default
         
         var isDir = ObjCBool(false) //isDir判断是否为文件夹
         
-        fileManager.fileExistsAtPath(path, isDirectory: &isDir)
+        fileManager.fileExists(atPath: path, isDirectory: &isDir)
         
-        if !fileManager.fileExistsAtPath(path, isDirectory: &isDir) {
+        if !fileManager.fileExists(atPath: path, isDirectory: &isDir) {
             
             self.createBaseDirectoryAtPath(path)
             
         } else {
             
-            if !isDir {
+            if !isDir.boolValue {
                 
                 do
                 {
-                    try fileManager.removeItemAtPath(path)
+                    try fileManager.removeItem(atPath: path)
                     self.createBaseDirectoryAtPath(path)
                 }
                 catch let error as NSError
@@ -199,11 +199,11 @@ public class XHNetworkCache {
         }
     }
     
-    private class func createBaseDirectoryAtPath(path: String) {
+    fileprivate class func createBaseDirectoryAtPath(_ path: String) {
         
         do
         {
-            try NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
             print("path ="+path)
             self.addDoNotBackupAttribute(path)
         }
@@ -214,12 +214,12 @@ public class XHNetworkCache {
         }
     }
     
-    private class func addDoNotBackupAttribute(path: String) {
-        let url: NSURL = NSURL.fileURLWithPath(path)
+    fileprivate class func addDoNotBackupAttribute(_ path: String) {
+        let url: URL = URL(fileURLWithPath: path)
         
         do
         {
-            try  url.setResourceValue(NSNumber(bool: true), forKey: NSURLIsExcludedFromBackupKey)
+            try  (url as NSURL).setResourceValue(NSNumber(value: true as Bool), forKey: URLResourceKey.isExcludedFromBackupKey)
         }
         catch let error as NSError
         {
@@ -228,12 +228,12 @@ public class XHNetworkCache {
         }
     }
     
-    private class func md5StringFromString(string: String) -> String {
+    fileprivate class func md5StringFromString(_ string: String) -> String {
         
-        let str = string.cStringUsingEncoding(NSUTF8StringEncoding)
-        let strLen = CC_LONG(string.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
+        let str = string.cString(using: String.Encoding.utf8)
+        let strLen = CC_LONG(string.lengthOfBytes(using: String.Encoding.utf8))
         let digestLen = Int(CC_MD5_DIGEST_LENGTH)
-        let result = UnsafeMutablePointer<CUnsignedChar>.alloc(digestLen);
+        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen);
         
         CC_MD5(str!, strLen, result);
         
@@ -241,14 +241,14 @@ public class XHNetworkCache {
         for i in 0 ..< digestLen {
             hash.appendFormat("%02x", result[i]);
         }
-        result.destroy();
+        result.deinitialize();
         
         return String(format: hash as String)
     }
     
-    private class func appVersionString() -> String {
+    fileprivate class func appVersionString() -> String {
         
-        return NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+        return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
         
     }
 }
