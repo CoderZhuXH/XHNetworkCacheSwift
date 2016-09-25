@@ -7,7 +7,7 @@
 ```objc
 //将数据(同步)写入磁盘缓存(参数1:服务器返回的JSON数据, 参数2:数据请求URL)
 //[按APP版本号缓存,不同版本APP,同一接口缓存数据互不干扰]
-if XHNetworkCache.saveJsonResponseToCacheFile(responseObject, URL: URLString)
+if XHNetworkCache.saveJsonResponseToCacheFile(responseObject as AnyObject, URL: URLString)
 {
      print("(同步)保存/更新成功")
 }
@@ -21,7 +21,7 @@ else
 ```objc
 //将数据(异步)写入磁盘缓存(参数1:服务器返回的JSON数据, 参数2:数据请求URL)
 //[按APP版本号缓存,不同版本APP,同一接口缓存数据互不干扰]
-XHNetworkCache.save_asyncJsonResponseToCacheFile(responseObject, URL: URLString) { (result) in
+XHNetworkCache.save_asyncJsonResponseToCacheFile(responseObject as AnyObject, URL: URLString) { (result) in
 if(result)
 {
      print("(异步)保存/更新成功")
@@ -72,7 +72,7 @@ let size = XHNetworkCache.cacheSize()
 *   3.`Bridging-Header.h`桥接文件怎么创建??? 请自行Google或百度
 
 ##  系统要求
-*   该项目最低支持 iOS 8.0 和 Xcode 7.3
+*   该项目最低支持 iOS 8.0 和 Xcode 8.0
 
 ##  许可证
     XHNetworkCacheSwift 使用 MIT 许可证，详情见 LICENSE 文件
